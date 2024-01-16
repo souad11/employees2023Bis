@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Department index{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Department index</h1>
+
+
+        <table class="table">
+        <thead>
+            <tr>
+                <th>Nom du département</th>
+                <th>Photo du manager</th>
+                <th>Description</th>
+                <th>Nombre d'employées</th>
+                <th>Poste vacants</th>
+                <th>ROI</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for department in departments %}
+            <tr>
+                <td>{{ department.deptName }}</td>
+                <td>
+                    {% if department.managerPhoto is defined and department.managerPhoto|length > 0 %}
+                       
+                        {% for photo in department.managerPhoto %}
+                            <img src="{{ asset(photo) }}" alt="Photo du manager" width="70" height="50">
+                        {% endfor %}
+                    {% else %}
+                        <p>pas de photo de manager pour ce département.</p>
+                    {% endif %}
+                </td>
+                
+                <td>{{ department.description }}</td>
+                <td>
+                {% for employeesByDepartment in employeesByDepartments %}
+                    {% if employeesByDepartment.deptName == department.deptName %}
+                    {{ employeesByDepartment.employeeCount }}
+                    {% endif %}
+                {% endfor %}
+                </td>
+
+                <td>{{ posteVacantByDepartment[department.deptName] }}</td>
+
+                <td>{{ department.roi }}</td>
+
+                <td><a href="{{ path('app_dept_title_index') }}">Postuler</a>
+
+                <td>
+                    <a href="{{ path('app_department_show', {'id': department.id}) }}">show</a>
+                    <a href="{{ path('app_department_edit', {'id': department.id}) }}">edit</a>
+                </td>
+
+                </tr>
+
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_department_new') }}">Create new</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block body %}
+<style>
+</style>
+
+<div class="container">
+    <h2 class="text-center mt-4 mb-4">Page de profil</h2>
+    <div class="card mx-auto p-5" style="max-width: 600px;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-8">
+                    <p class="card-text"><strong>Prénom:</strong> {{ firstName }}</p>
+                    <p class="card-text"><strong>Nom:</strong> {{ lastName }}</p>
+                    <p class="card-text"><strong>Date de naissance:</strong> {{ birthDate.format('d/m/Y') }}</p>
+                    <p class="card-text"><strong>Genre:</strong> {{ gender.value }}</p>
+                    <p class="card-text"><strong>Date d'embauche:</strong> {{ hireDate.format('d/m/Y') }}</p>
+                </div>
+                <div class="col-4 text-right">
+                    <img src="images/{{ photo }}" alt="Photo" class="img-fluid">
+                </div>
+            </div>
+            <a href="{{ path('app_employee_show_profil', {'id':  id }) }}" class="btn btn-primary btn-sm mt-5">Voir mes demandes</a>
+            <a href="{{ path('app_employee_edit', {'id':  id }) }}" class="btn btn-primary btn-sm mt-5">Modifier mon profil</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
